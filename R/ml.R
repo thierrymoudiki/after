@@ -79,6 +79,7 @@ mlf <- function(x_train, y_train, x_test,
                               y=rep(median(y_train), nrow(x_test)),
                               testing=FALSE, lags=lags,
                               encoding="target")
+
   x_test_ <- x_test <- xy_test$x
   for (f in training_set_factors) # loop on training set factor columns
   {
