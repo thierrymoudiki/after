@@ -65,6 +65,7 @@ mlf <- function(x_train, y_train, x_test,
                                encoding="target")
   y_train_ <- xy_train$y
   x_train_ <- as.matrix(xy_train$x)
+  names(y_train_) <- rownames(x_train_) <- paste0("train", 1:nrow(x_train_))
   codes <- xy_train$codes
   training_set_factors <- names(codes)
 
@@ -74,7 +75,8 @@ mlf <- function(x_train, y_train, x_test,
   # encode
   set.seed(seed)
   xy_test <- after::embed_reg(x=x_test,
-                              y=rnorm(nrow(x_test))+median(y_train),
+                              #y=rnorm(nrow(x_test))+median(y_train),
+                              y=rep(median(y_train), nrow(x_test)),
                               testing=FALSE, lags=lags,
                               encoding="target")
   x_test_ <- x_test <- xy_test$x
@@ -90,6 +92,10 @@ mlf <- function(x_train, y_train, x_test,
   }
   x_test_[[f]] <- x_test_[[f_]]
   x_test_[[f_]] <- NULL
+  rownames(x_test_) <- paste0("test", 1:nrow(x_test_))
+  x_test_ <- rbind(tail(x_train_, 1), x_test_)
+  x_train_ <- x_train_[-nrow(x_train_),]
+  y_train_ <- y_train_[-length(y_train_)]
   rm(x_test); gc()
 
 
