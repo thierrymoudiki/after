@@ -4,7 +4,7 @@
 \alias{predict_ridge}
 \title{Title}
 \usage{
-predict_ridge(obj, newx)
+predict_ridge(obj, newx, cv = TRUE)
 }
 \arguments{
 \item{newx}{}
@@ -14,4 +14,23 @@ predict_ridge(obj, newx)
 }
 \description{
 Title
+}
+\examples{
+
+
+n <- 10000 ; p <- 100
+X <- matrix(rnorm(n * p), n, p) # no intercept!
+y <- rnorm(n)
+
+fit_obj <- after::fit_ridge(X, y)
+
+n_test <- 10
+
+predict_ridge(fit_obj, newx=matrix(rnorm(n_test * p), n_test, p),
+cv=TRUE)
+
+predict_ridge(fit_obj, newx=matrix(rnorm(n_test * p), n_test, p),
+cv=FALSE)
+
+
 }

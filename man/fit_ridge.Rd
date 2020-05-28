@@ -4,7 +4,7 @@
 \alias{fit_ridge}
 \title{Title}
 \usage{
-fit_ridge(x, y, lambda)
+fit_ridge(x, y, lambda = 10^seq(-5, 4, length.out = 100))
 }
 \arguments{
 \item{lambda}{}
@@ -14,4 +14,15 @@ fit_ridge(x, y, lambda)
 }
 \description{
 Title
+}
+\examples{
+
+n <- 1000 ; p <- 100
+X <- matrix(rnorm(n * p), n, p) # no intercept!
+y <- rnorm(n)
+
+(fit_obj <- after::fit_ridge(X, y))
+
+matplot(fit_obj$lambda, t(fit_obj$coef), type = 'l')
+
 }

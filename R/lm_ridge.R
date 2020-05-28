@@ -8,7 +8,17 @@
 #' @export
 #'
 #' @examples
-fit_ridge <- function(x, y, lambda)
+#'
+#' n <- 1000 ; p <- 100
+#' X <- matrix(rnorm(n * p), n, p) # no intercept!
+#' y <- rnorm(n)
+#'
+#' (fit_obj <- after::fit_ridge(X, y))
+#'
+#' matplot(fit_obj$lambda, t(fit_obj$coef), type = 'l')
+#'
+fit_ridge <- function(x, y, lambda=10^seq(-5, 4,
+                                          length.out = 100))
 {
   x <- as.matrix(x)
   y <- as.vector(y)
@@ -47,6 +57,7 @@ fit_ridge <- function(x, y, lambda)
       xm = attrs$`scaled:center`,
       xsd = attrs$`scaled:scale`,
       lambda = lambda,
+      best_lam = lambda[which.min(GCV)],
       fitted_values = fitted_values,
       residuals = centered_y - centered_y_hat,
       GCV = GCV,
@@ -67,8 +78,30 @@ fit_ridge <- function(x, y, lambda)
 #' @export
 #'
 #' @examples
-predict_ridge <- function(obj, newx)
+#'
+#'
+#' n <- 10000 ; p <- 100
+#' X <- matrix(rnorm(n * p), n, p) # no intercept!
+#' y <- rnorm(n)
+#'
+#' fit_obj <- after::fit_ridge(X, y)
+#'
+#' n_test <- 10
+#'
+#' predict_ridge(fit_obj, newx=matrix(rnorm(n_test * p), n_test, p),
+#' cv=TRUE)
+#'
+#' predict_ridge(fit_obj, newx=matrix(rnorm(n_test * p), n_test, p),
+#' cv=FALSE)
+#'
+#'
+predict_ridge <- function(obj, newx, cv=TRUE)
 {
+  if (cv){
+    return(drop(base::scale(newx, center=obj$xm,
+                       scale=obj$xsd)%*%obj$coef[,which.min(obj$GCV)] + obj$ym))
+  }
+
   return(base::scale(newx, center=obj$xm,
                      scale=obj$xsd)%*%obj$coef + obj$ym)
 }

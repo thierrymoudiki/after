@@ -19,7 +19,7 @@ garch11f <- function(x, h=5, level=c(80, 95))
 
   # container for the results
   fit <- fGarch::garchFit(~ garch(1,1), data = x, trace = FALSE)
-  preds <- predict(fit, h)
+  preds <- fGarch::predict(fit, h)
   critical_values <- sapply(level, function(q) qnorm(1 - (1 - q/100)/2))
   freq_x <- frequency(x)
   start_preds <- tsp(x)[2] + 1/freq_x

@@ -11,94 +11,63 @@
 
 
 
-#' Neural Network Time Series Forecasts
+
 #'
-#' Feed-forward neural networks with a single hidden layer and lagged inputs
-#' for forecasting univariate time series.
+#' @param y
+#' @param p
+#' @param P
+#' @param xreg
+#' @param fit_func
+#' @param predict_func
+#' @param fit_params
+#' @param lambda
+#' @param scale_inputs
+#' @param x
+#' @param seed
+#' @param ...
+#' @example
 #'
-#' A feed-forward neural network is fitted with lagged values of \code{y} as
-#' inputs and a single hidden layer with \code{size} nodes. The inputs are for
-#' lags 1 to \code{p}, and lags \code{m} to \code{mP} where
-#' \code{m=frequency(y)}. If \code{xreg} is provided, its columns are also
-#' used as inputs. If there are missing values in \code{y} or
-#' \code{xreg}, the corresponding rows (and any others which depend on them as
-#' lags) are omitted from the fit. A total of \code{repeats} networks are
-#' fitted, each with random starting weights. These are then averaged when
-#' computing forecasts. The network is trained for one-step forecasting.
-#' Multi-step forecasts are computed recursively.
 #'
-#' For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model,
-#' where k is the number of hidden nodes. This is analogous to an AR(p) model
-#' but with nonlinear functions. For seasonal data, the fitted model is called
-#' an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m]
-#' model but with nonlinear functions.
 #'
-#' @aliases print.dynrm print.dynrmmodels
+#' dat <- list(lynx, USAccDeaths, Nile, WWWusage, fdeaths, AirPassengers)
 #'
-#' @param y A numeric vector or time series of class \code{ts}.
-#' @param p Embedding dimension for non-seasonal time series. Number of
-#' non-seasonal lags used as inputs. For non-seasonal time series, the default
-#' is the optimal number of lags (according to the AIC) for a linear AR(p)
-#' model. For seasonal time series, the same method is used but applied to
-#' seasonally adjusted data (from an stl decomposition).
-#' @param P Number of seasonal lags used as inputs.
-#' @param size Number of nodes in the hidden layer. Default is half of the
-#' number of input nodes (including external regressors, if given) plus 1.
-#' @param repeats Number of networks to fit with different random starting
-#' weights. These are then averaged when producing forecasts.
-#' @param xreg Optionally, a vector or matrix of external regressors, which
-#' must have the same number of rows as \code{y}. Must be numeric.
-#' @param model Output from a previous call to \code{dynrm}. If model is
-#' passed, this same model is fitted to \code{y} without re-estimating any
-#' parameters.
-#' @param subset Optional vector specifying a subset of observations to be used
-#' in the fit. Can be an integer index vector or a logical vector the same
-#' length as \code{y}. All observations are used by default.
-#' @param scale_inputs If TRUE, inputs are scaled by subtracting the column
-#' means and dividing by their respective standard deviations. If \code{lambda}
-#' is not \code{NULL}, scaling is applied after Box-Cox transformation.
-#' @param x Deprecated. Included for backwards compatibility.
-#' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
-#' \code{dynrm}.
-#' @inheritParams forecast
+#' h <- 10
 #'
-#' @return Returns an object of class "\code{dynrm}".
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results.
+#' # Example 1: glmnet
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{dynrm}.
+#' par(mfrow=c(3, 2))
 #'
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{x}{The original time series.}
-#' \item{xreg}{The external regressors used in fitting (if given).}
-#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
-#' \item{...}{Other arguments}
+#' for (i in 1:length(dat))
+#' {
+#'  cat("Dataset #", i, ":", length(x), "points \n")
+#'  x <- dat[[i]]
 #'
-#' @author Rob J Hyndman and Gabriel Caceres
-#' @keywords ts
-#' @examples
-#' #fit <- dynrm(lynx)
-#' #fcast <- forecast(fit)
-#' #plot(fcast)
+#'  obj <- after::dynrm_fit(x, fit_func = function(x, y) glmnet::glmnet(x, y, lambda = 0.01),
+#'  p=1, predict_func = glmnet::predict.glmnet, xreg = as.matrix(1:length(x)))
 #'
-#' ## Arguments can be passed to nnet()
-#' #fit <- dynrm(lynx, decay=0.5, maxit=150)
-#' #plot(forecast(fit))
-#' #lines(lynx)
+#'  plot(after::dynrm_predict(obj, xreg = as.matrix((length(x)+1):(length(x)+h-1)),
+#'  ci="A", h=h))
+#' }
 #'
-#' ## Fit model to first 100 years of lynx data
-#' #fit <- dynrm(window(lynx,end=1920), decay=0.5, maxit=150)
-#' #plot(forecast(fit, h=14))
-#' #lines(lynx)
 #'
-#' ## Apply fitted model to later data, including all optional arguments
-#' #fit2 <- dynrm(window(lynx,start=1921), model=fit)
 #'
-#' @export
+#' # Example 2: ridge
+#'
+#' par(mfrow=c(3, 2))
+#'
+#' for (i in 1:length(dat))
+#' {
+#'  cat("Dataset #", i, ":", length(x), "points \n")
+#'  x <- dat[[i]]
+#'
+#'  obj <- after::dynrm_fit(x, fit_func = after::fit_ridge,
+#'  p=1, predict_func = after::predict_ridge, xreg = as.matrix(1:length(x)))
+#'
+#'  plot(after::dynrm_predict(obj, xreg = as.matrix((length(x)+1):(length(x)+h-1)),
+#'  ci="garch", h=h))
+#' }
+#'
 dynrm_fit <- function(y,
                    p,
                    P = 1,
@@ -148,7 +117,7 @@ dynrm_fit <- function(y,
 
     # scale xreg
     if (scale_inputs) {
-      tmpx <- scale(xxreg, center = TRUE, scale = TRUE)
+      tmpx <- base::scale(xxreg, center = TRUE, scale = TRUE)
       scalexreg <- list(
         center = attr(tmpx, "scaled:center"),
         scale = attr(tmpx, "scaled:scale")
@@ -303,7 +272,8 @@ dynrm_fit <- function(y,
 
   out$call <- match.call()
 
-  return(structure(out, class = c("dynrm")))
+  # return
+  invisible(structure(out, class = c("dynrm")))
 }
 
 
@@ -446,7 +416,7 @@ dynrm_predict <-
                          center = out$scalex$center,
                          scale = out$scalex$scale)
       if (!is.null(xreg)) {
-        xxreg <- stats::scale(xreg,
+        xxreg <- base::scale(xreg,
                               center = out$scalexreg$center,
                               scale = out$scalexreg$scale)
       }
