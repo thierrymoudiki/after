@@ -2,7 +2,7 @@
 % Please edit documentation in R/dynrm.R
 \name{dynrm_predict}
 \alias{dynrm_predict}
-\title{Forecasting using neural network models}
+\title{Predict from dynrm}
 \usage{
 dynrm_predict(
   out,
@@ -16,87 +16,34 @@ dynrm_predict(
 )
 }
 \arguments{
-\item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
-is ignored and the number of forecast periods is set to the number of rows
-of \code{xreg}.}
-
-\item{level}{Confidence level for prediction intervals.}
-
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
-suitable for fan plots.}
-
-\item{xreg}{Future values of external regressor variables.}
-
-\item{...}{Additional arguments passed to \code{\link{simulate.dynrm}}}
-
-\item{object}{An object of class "\code{dynrm}" resulting from a call to
-\code{\link{dynrm}}.}
-
-\item{PI}{If TRUE, prediction intervals are produced, otherwise only point
-forecasts are calculated. If \code{PI} is FALSE, then \code{level},
-\code{fan}, \code{bootstrap} and \code{npaths} are all ignored.}
+\item{...}{}
 }
 \value{
-An object of class "\code{forecast}".
 
-The function \code{summary} is used to obtain and print a summary of the
-results, while the function \code{plot} produces a plot of the forecasts and
-prediction intervals.
-
-The generic accessor functions \code{fitted.values} and \code{residuals}
-extract useful features of the value returned by \code{after.dynrm}.
-
-An object of class "\code{forecast}" is a list containing at least the
-following elements:
-  \item{model}{A list containing information about the fitted model}
-  \item{method}{The name of the forecasting method as a character string}
-  \item{mean}{Point forecasts as a time series}
-  \item{lower}{Lower limits for prediction intervals}
-  \item{upper}{Upper limits for prediction intervals}
-  \item{level}{The confidence values associated with the prediction intervals}
-  \item{x}{The original time series (either \code{object} itself or the time series
-           used to create the model stored as \code{object}).}
-  \item{xreg}{The external regressors used in fitting (if given).}
-  \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-  \item{fitted}{Fitted values (one-step forecasts)}
-  \item{...}{Other arguments}
 }
 \description{
-Returns forecasts and other information for univariate neural network
-models.
-}
-\details{
-Prediction intervals are calculated through simulations and can be slow.
-Note that if the network is too complex and overfits the data, the residuals
-can be arbitrarily small; if used for prediction interval calculations, they
-could lead to misleadingly small values. It is possible to use out-of-sample
-residuals to ameliorate this, see examples.
+Predict from dynrm
 }
 \examples{
-## Fit & forecast model
-#fit <- dynrm(USAccDeaths, size=2)
-#fcast <- forecast(fit, h=20)
-#plot(fcast)
 
-\dontrun{
-## Include prediction intervals in forecast
-#fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
-#plot(fcast2)
+dat <- list(lynx, USAccDeaths, Nile, WWWusage, fdeaths, AirPassengers)
 
-## Set up out-of-sample innovations using cross-validation
-#fit_cv <- CVar(USAccDeaths,  size=2)
-#res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
-#myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
-## Forecast using new innovations
-#fcast3 <- forecast(fit, h=20, PI=TRUE, npaths=100, innov=myinnovs)
-#plot(fcast3)
-#}
+h <- 10
+
+# Example 2: ridge
+
+par(mfrow=c(3, 2))
+
+for (i in 1:length(dat))
+{
+ x <- dat[[i]]
+ cat("Dataset #", i, ":", length(x), "points \n")
+
+ obj <- after::dynrm_fit(x, fit_func = after::fit_ridge,
+ predict_func = after::predict_ridge, xreg = as.matrix(1:length(x)))
+
+  plot(after::dynrm_predict(obj, xreg = as.matrix((length(x)+1):(length(x)+h-1)),
+  ci="A", h=h))
+}
 
 }
-\seealso{
-\code{\link{dynrm}}.
-}
-\author{
-Rob J Hyndman and Gabriel Caceres
-}
-\keyword{ts}

@@ -4,7 +4,7 @@
 \alias{fit_ridge}
 \title{Title}
 \usage{
-fit_ridge(x, y, lambda = 10^seq(-5, 4, length.out = 100))
+fit_ridge(x, y, lambda = 10^seq(-10, 10, length.out = 100))
 }
 \arguments{
 \item{lambda}{}
@@ -17,7 +17,7 @@ Title
 }
 \examples{
 
-n <- 1000 ; p <- 100
+n <- 100 ; p <- 10
 X <- matrix(rnorm(n * p), n, p) # no intercept!
 y <- rnorm(n)
 

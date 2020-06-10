@@ -1,7 +1,4 @@
 
-
-
-
 # Defaults:
 # For non-seasonal data, p chosen using AIC from linear AR(p) model
 # For seasonal data, p chosen using AIC from linear AR(p) model after
@@ -11,7 +8,7 @@
 
 
 
-
+#' Fit a dynrm
 #'
 #' @param y
 #' @param p
@@ -40,8 +37,8 @@
 #'
 #' for (i in 1:length(dat))
 #' {
-#'  cat("Dataset #", i, ":", length(x), "points \n")
 #'  x <- dat[[i]]
+#'  cat("Dataset #", i, ":", length(x), "points \n")
 #'
 #'  obj <- after::dynrm_fit(x, fit_func = function(x, y) glmnet::glmnet(x, y, lambda = 0.01),
 #'  p=1, predict_func = glmnet::predict.glmnet, xreg = as.matrix(1:length(x)))
@@ -58,14 +55,14 @@
 #'
 #' for (i in 1:length(dat))
 #' {
-#'  cat("Dataset #", i, ":", length(x), "points \n")
 #'  x <- dat[[i]]
+#'  cat("Dataset #", i, ":", length(x), "points \n")
 #'
 #'  obj <- after::dynrm_fit(x, fit_func = after::fit_ridge,
 #'  p=1, predict_func = after::predict_ridge, xreg = as.matrix(1:length(x)))
 #'
 #'  plot(after::dynrm_predict(obj, xreg = as.matrix((length(x)+1):(length(x)+h-1)),
-#'  ci="garch", h=h))
+#'  ci="A", h=h))
 #' }
 #'
 dynrm_fit <- function(y,
@@ -75,7 +72,7 @@ dynrm_fit <- function(y,
                    fit_func = stats::lm.fit,
                    predict_func = predict.lm,
                    fit_params = NULL,
-                   lambda = NULL,
+                   lambda = NULL, alpha = NULL,
                    scale_inputs = TRUE,
                    x = y,
                    seed = 123,
@@ -191,14 +188,25 @@ dynrm_fit <- function(y,
   for (i in 1:nlag)
     lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
 
-  cat("lags.X: ", "\n")
-  print(head(lags.X))
-  print(tail(lags.X))
-  cat("\n")
+   # cat("lags.X: ", "\n")
+   # print(head(lags.X))
+   # print(tail(lags.X))
+   # cat("\n")
 
-  # Add xreg into lagged matrix
-  lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
-
+  if (is.null(alpha) == FALSE)
+  {
+    n_alphas <- nrow(lags.X)
+    alphas <- alpha*((1-alpha)^((n_alphas + p + P - 2):0))
+     # cat("alphas: ", "\n")
+     # print(dim(exp(embedc(alphas, p + P -1))))
+     # cat("\n")
+    # Add xreg into lagged matrix
+    lags.X <- cbind(lags.X*exp(embedc(alphas, ncol(lags.X)-1)),
+                    xxreg[-(1:maxlag), ])
+  } else {
+    # Add xreg into lagged matrix
+    lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
+  }
 
   # Remove missing values if present
   j <- complete.cases(lags.X, y)
@@ -209,10 +217,10 @@ dynrm_fit <- function(y,
     stop("No data to fit (possibly due to NA or NaN)")
   }
 
-  cat("y: ", "\n")
-  print(head(y))
-  print(tail(y))
-  cat("\n")
+   # cat("y: ", "\n")
+   # print(head(y))
+   # print(tail(y))
+   # cat("\n")
 
   # fit
   set.seed(seed) # in case the algo is randomized
@@ -261,6 +269,7 @@ dynrm_fit <- function(y,
   out$predict_func <- predict_func
   out$series <- yname
   out$method <- paste("DynRM ", p, sep = "")
+  out$sigma <- sd(out$residuals)
 
   if (P > 0) {
     out$method <- paste(out$method, ",", P, sep = "")
@@ -277,80 +286,43 @@ dynrm_fit <- function(y,
 }
 
 
-#' Forecasting using neural network models
+
+#' Predict from dynrm
 #'
-#' Returns forecasts and other information for univariate neural network
-#' models.
+#' @param out
+#' @param h
+#' @param level
+#' @param fan
+#' @param xreg
+#' @param lambda
+#' @param ci
+#' @param ...
 #'
-#' Prediction intervals are calculated through simulations and can be slow.
-#' Note that if the network is too complex and overfits the data, the residuals
-#' can be arbitrarily small; if used for prediction interval calculations, they
-#' could lead to misleadingly small values. It is possible to use out-of-sample
-#' residuals to ameliorate this, see examples.
-#'
-#' @param object An object of class "\code{dynrm}" resulting from a call to
-#' \code{\link{dynrm}}.
-#' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
-#' is ignored and the number of forecast periods is set to the number of rows
-#' of \code{xreg}.
-#' @param PI If TRUE, prediction intervals are produced, otherwise only point
-#' forecasts are calculated. If \code{PI} is FALSE, then \code{level},
-#' \code{fan}, \code{bootstrap} and \code{npaths} are all ignored.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
-#' suitable for fan plots.
-#' @param xreg Future values of external regressor variables.
-#' @param ... Additional arguments passed to \code{\link{simulate.dynrm}}
-#' @inheritParams forecast
-#'
-#' @return An object of class "\code{forecast}".
-#'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{after.dynrm}.
-#'
-#' An object of class "\code{forecast}" is a list containing at least the
-#' following elements:
-#'   \item{model}{A list containing information about the fitted model}
-#'   \item{method}{The name of the forecasting method as a character string}
-#'   \item{mean}{Point forecasts as a time series}
-#'   \item{lower}{Lower limits for prediction intervals}
-#'   \item{upper}{Upper limits for prediction intervals}
-#'   \item{level}{The confidence values associated with the prediction intervals}
-#'   \item{x}{The original time series (either \code{object} itself or the time series
-#'            used to create the model stored as \code{object}).}
-#'   \item{xreg}{The external regressors used in fitting (if given).}
-#'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-#'   \item{fitted}{Fitted values (one-step forecasts)}
-#'   \item{...}{Other arguments}
-#'
-#' @author Rob J Hyndman and Gabriel Caceres
-#' @seealso \code{\link{dynrm}}.
-#' @keywords ts
-#' @examples
-#' ## Fit & forecast model
-#' #fit <- dynrm(USAccDeaths, size=2)
-#' #fcast <- forecast(fit, h=20)
-#' #plot(fcast)
-#'
-#' \dontrun{
-#' ## Include prediction intervals in forecast
-#' #fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
-#' #plot(fcast2)
-#'
-#' ## Set up out-of-sample innovations using cross-validation
-#' #fit_cv <- CVar(USAccDeaths,  size=2)
-#' #res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
-#' #myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
-#' ## Forecast using new innovations
-#' #fcast3 <- forecast(fit, h=20, PI=TRUE, npaths=100, innov=myinnovs)
-#' #plot(fcast3)
-#' #}
-#'
+#' @return
 #' @export
+#'
+#' @examples
+#'
+#' dat <- list(lynx, USAccDeaths, Nile, WWWusage, fdeaths, AirPassengers)
+#'
+#' h <- 10
+#'
+#' # Example 2: ridge
+#'
+#' par(mfrow=c(3, 2))
+#'
+#' for (i in 1:length(dat))
+#' {
+#'  x <- dat[[i]]
+#'  cat("Dataset #", i, ":", length(x), "points \n")
+#'
+#'  obj <- after::dynrm_fit(x, fit_func = after::fit_ridge,
+#'  predict_func = after::predict_ridge, xreg = as.matrix(1:length(x)))
+#'
+#'   plot(after::dynrm_predict(obj, xreg = as.matrix((length(x)+1):(length(x)+h-1)),
+#'   ci="A", h=h))
+#' }
+#'
 dynrm_predict <-
   function(out,
            h = ifelse(out$m > 1, 2 * out$m, 10),
@@ -428,18 +400,18 @@ dynrm_predict <-
     maxlag <- max(lags)
     flag <- rev(tail(xx, n = maxlag))
 
-    cat("flag", "\n")
-    print(flag)
-    cat("\n")
+    # cat("flag", "\n")
+    # print(flag)
+    # cat("\n")
 
     # Iterative 1-step forecast
     for (i in 1:h)
     {
       newdata <- c(flag[lags], xxreg[i, ])
 
-      cat("newdata", "\n")
-      print(newdata)
-      cat("\n")
+      # cat("newdata", "\n")
+      # print(newdata)
+      # cat("\n")
 
       newdata_ <- as.matrix(rbind(newdata,
                                   rnorm(length(newdata))))
@@ -458,9 +430,9 @@ dynrm_predict <-
         }
       }
 
-      cat("preds", "\n")
-      print(preds)
-      cat("\n")
+      # cat("preds", "\n")
+      # print(preds)
+      # cat("\n")
 
       fcast[i] <- preds
 
@@ -521,6 +493,26 @@ dynrm_predict <-
       out$mean <- fcast + resid_fcast$mean
       out$lower <- fcast + resid_fcast$lower
       out$upper <- fcast + resid_fcast$upper
+    }
+
+    if (ci == "gaussian")
+    {
+      qts <- sapply(level, function (x) qnorm(1-(1-(100-x)/200)))
+      nlevels_ <- length(qts)
+      out$mean <- fcast
+      out$lower <- ts(matrix(nrow = h, ncol = nlevels_),
+                      start = start(out$mean),
+                      frequency = frequency(out$mean))
+      colnames(out$lower) <- paste("Lo", level)
+      out$upper <- ts(matrix(nrow = h, ncol = nlevels_),
+                      start = start(out$mean),
+                      frequency = frequency(out$mean))
+      colnames(out$upper) <- paste("Hi", level)
+      for (i in 1:nlevels_)
+      {
+        out$lower[, i] <-  fcast - qts[i]*out$sigma
+        out$upper[, i] <-  fcast + qts[i]*out$sigma
+      }
     }
 
     out$level <- level

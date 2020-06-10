@@ -9,7 +9,7 @@
 #'
 #' @examples
 #'
-#' n <- 1000 ; p <- 100
+#' n <- 100 ; p <- 10
 #' X <- matrix(rnorm(n * p), n, p) # no intercept!
 #' y <- rnorm(n)
 #'
@@ -17,7 +17,7 @@
 #'
 #' matplot(fit_obj$lambda, t(fit_obj$coef), type = 'l')
 #'
-fit_ridge <- function(x, y, lambda=10^seq(-5, 4,
+fit_ridge <- function(x, y, lambda=10^seq(-10, 10,
                                           length.out = 100))
 {
   x <- as.matrix(x)
@@ -80,7 +80,7 @@ fit_ridge <- function(x, y, lambda=10^seq(-5, 4,
 #' @examples
 #'
 #'
-#' n <- 10000 ; p <- 100
+#' n <- 100 ; p <- 10
 #' X <- matrix(rnorm(n * p), n, p) # no intercept!
 #' y <- rnorm(n)
 #'

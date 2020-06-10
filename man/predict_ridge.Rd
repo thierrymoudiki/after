@@ -18,7 +18,7 @@ Title
 \examples{
 
 
-n <- 10000 ; p <- 100
+n <- 100 ; p <- 10
 X <- matrix(rnorm(n * p), n, p) # no intercept!
 y <- rnorm(n)
 
