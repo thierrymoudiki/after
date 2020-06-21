@@ -16,6 +16,7 @@ dynrm_fit(
   alpha = NULL,
   scale_inputs = TRUE,
   x = y,
+  centers = NULL,
   seed = 123,
   ...
 )
