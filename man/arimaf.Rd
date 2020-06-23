@@ -4,7 +4,13 @@
 \alias{arimaf}
 \title{Title}
 \usage{
-arimaf(x, h = 5, ...)
+arimaf(
+  x,
+  h = 5,
+  level = c(80, 95),
+  ci = c("gaussian", "E", "A", "T", "garch"),
+  ...
+)
 }
 \arguments{
 \item{...}{}
