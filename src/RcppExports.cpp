@@ -17,9 +17,428 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sum_cpp
+double sum_cpp(NumericVector x);
+RcppExport SEXP _after_sum_cpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_cpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// l2_norm
+double l2_norm(NumericVector x);
+RcppExport SEXP _after_l2_norm(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(l2_norm(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// gaussian_kxx_cpp
+NumericMatrix gaussian_kxx_cpp(NumericMatrix x, double sigma, double l);
+RcppExport SEXP _after_gaussian_kxx_cpp(SEXP xSEXP, SEXP sigmaSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(gaussian_kxx_cpp(x, sigma, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// gaussian_kxy_cpp
+NumericVector gaussian_kxy_cpp(NumericMatrix x, NumericVector y, double sigma, double l);
+RcppExport SEXP _after_gaussian_kxy_cpp(SEXP xSEXP, SEXP ySEXP, SEXP sigmaSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(gaussian_kxy_cpp(x, y, sigma, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// poly_kxx_cpp
+NumericMatrix poly_kxx_cpp(NumericMatrix x, double sigma, int d, double l);
+RcppExport SEXP _after_poly_kxx_cpp(SEXP xSEXP, SEXP sigmaSEXP, SEXP dSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< int >::type d(dSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(poly_kxx_cpp(x, sigma, d, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// poly_kxy_cpp
+NumericVector poly_kxy_cpp(NumericMatrix x, NumericVector y, double sigma, int d, double l);
+RcppExport SEXP _after_poly_kxy_cpp(SEXP xSEXP, SEXP ySEXP, SEXP sigmaSEXP, SEXP dSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< int >::type d(dSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(poly_kxy_cpp(x, y, sigma, d, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// matern32_kxx_cpp
+NumericMatrix matern32_kxx_cpp(NumericMatrix x, double sigma, double l);
+RcppExport SEXP _after_matern32_kxx_cpp(SEXP xSEXP, SEXP sigmaSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(matern32_kxx_cpp(x, sigma, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// matern32_kxy_cpp
+NumericVector matern32_kxy_cpp(NumericMatrix x, NumericVector y, double sigma, double l);
+RcppExport SEXP _after_matern32_kxy_cpp(SEXP xSEXP, SEXP ySEXP, SEXP sigmaSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(matern32_kxy_cpp(x, y, sigma, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// matern52_kxx_cpp
+NumericMatrix matern52_kxx_cpp(NumericMatrix x, double sigma, double l);
+RcppExport SEXP _after_matern52_kxx_cpp(SEXP xSEXP, SEXP sigmaSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(matern52_kxx_cpp(x, sigma, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// matern52_kxy_cpp
+NumericVector matern52_kxy_cpp(NumericMatrix x, NumericVector y, double sigma, double l);
+RcppExport SEXP _after_matern52_kxy_cpp(SEXP xSEXP, SEXP ySEXP, SEXP sigmaSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(matern52_kxy_cpp(x, y, sigma, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sign_cpp
+double sign_cpp(double x);
+RcppExport SEXP _after_sign_cpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(sign_cpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// abs_cpp
+double abs_cpp(double x);
+RcppExport SEXP _after_abs_cpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(abs_cpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// max_cpp
+double max_cpp(double x, double y);
+RcppExport SEXP _after_max_cpp(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(max_cpp(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// norm_cpp
+double norm_cpp(NumericVector x);
+RcppExport SEXP _after_norm_cpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(norm_cpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cross_prod_cpp
+double cross_prod_cpp(NumericVector x, NumericVector y);
+RcppExport SEXP _after_cross_prod_cpp(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(cross_prod_cpp(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// soft_thres_cpp
+double soft_thres_cpp(double x, double y);
+RcppExport SEXP _after_soft_thres_cpp(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(soft_thres_cpp(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_by_value
+NumericVector pass_by_value(NumericVector x, NumericVector y);
+RcppExport SEXP _after_pass_by_value(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_by_value(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// lasso_shoot_cpp
+List lasso_shoot_cpp(NumericVector beta, NumericMatrix XX2, NumericVector Xy2, double lambda, double tol, unsigned long int max_iter);
+RcppExport SEXP _after_lasso_shoot_cpp(SEXP betaSEXP, SEXP XX2SEXP, SEXP Xy2SEXP, SEXP lambdaSEXP, SEXP tolSEXP, SEXP max_iterSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type XX2(XX2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Xy2(Xy2SEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< unsigned long int >::type max_iter(max_iterSEXP);
+    rcpp_result_gen = Rcpp::wrap(lasso_shoot_cpp(beta, XX2, Xy2, lambda, tol, max_iter));
+    return rcpp_result_gen;
+END_RCPP
+}
+// crossprod_cpp
+double crossprod_cpp(NumericVector x, NumericVector y);
+RcppExport SEXP _after_crossprod_cpp(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(crossprod_cpp(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// columns_crossprod_cpp
+NumericVector columns_crossprod_cpp(NumericMatrix eL);
+RcppExport SEXP _after_columns_crossprod_cpp(SEXP eLSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type eL(eLSEXP);
+    rcpp_result_gen = Rcpp::wrap(columns_crossprod_cpp(eL));
+    return rcpp_result_gen;
+END_RCPP
+}
+// squared_crossprod_cpp
+NumericVector squared_crossprod_cpp(NumericMatrix eL, NumericVector hL);
+RcppExport SEXP _after_squared_crossprod_cpp(SEXP eLSEXP, SEXP hLSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type eL(eLSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hL(hLSEXP);
+    rcpp_result_gen = Rcpp::wrap(squared_crossprod_cpp(eL, hL));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_hL
+NumericVector calculate_hL(NumericMatrix x, NumericVector w, Rcpp::String activation);
+RcppExport SEXP _after_calculate_hL(SEXP xSEXP, SEXP wSEXP, SEXP activationSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type activation(activationSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_hL(x, w, activation));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_xsiL
+NumericVector calculate_xsiL(NumericMatrix eL, NumericVector hL, double nu, double r, unsigned long int L);
+RcppExport SEXP _after_calculate_xsiL(SEXP eLSEXP, SEXP hLSEXP, SEXP nuSEXP, SEXP rSEXP, SEXP LSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type eL(eLSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hL(hLSEXP);
+    Rcpp::traits::input_parameter< double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< double >::type r(rSEXP);
+    Rcpp::traits::input_parameter< unsigned long int >::type L(LSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_xsiL(eL, hL, nu, r, L));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_betasL
+NumericVector calculate_betasL(NumericMatrix eL, NumericVector hL);
+RcppExport SEXP _after_calculate_betasL(SEXP eLSEXP, SEXP hLSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type eL(eLSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hL(hLSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_betasL(eL, hL));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_fittedeL
+NumericMatrix calculate_fittedeL(NumericVector betasL, NumericVector hL, double nu);
+RcppExport SEXP _after_calculate_fittedeL(SEXP betasLSEXP, SEXP hLSEXP, SEXP nuSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type betasL(betasLSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hL(hLSEXP);
+    Rcpp::traits::input_parameter< double >::type nu(nuSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_fittedeL(betasL, hL, nu));
+    return rcpp_result_gen;
+END_RCPP
+}
+// create_lags_cpp
+NumericMatrix create_lags_cpp(NumericVector x, int k);
+RcppExport SEXP _after_create_lags_cpp(SEXP xSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(create_lags_cpp(x, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// create_train_inputs_cpp
+List create_train_inputs_cpp(NumericMatrix x, int k);
+RcppExport SEXP _after_create_train_inputs_cpp(SEXP xSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(create_train_inputs_cpp(x, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// reformat_cpp
+NumericMatrix reformat_cpp(NumericMatrix x, unsigned long int n_k);
+RcppExport SEXP _after_reformat_cpp(SEXP xSEXP, SEXP n_kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned long int >::type n_k(n_kSEXP);
+    rcpp_result_gen = Rcpp::wrap(reformat_cpp(x, n_k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rev_matrix_cpp
+NumericMatrix rev_matrix_cpp(NumericMatrix x);
+RcppExport SEXP _after_rev_matrix_cpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rev_matrix_cpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rbind_vecmat_cpp
+NumericMatrix rbind_vecmat_cpp(NumericVector y, NumericMatrix x);
+RcppExport SEXP _after_rbind_vecmat_cpp(SEXP ySEXP, SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rbind_vecmat_cpp(y, x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cbind_cpp
+NumericMatrix cbind_cpp(NumericMatrix x, NumericMatrix y);
+RcppExport SEXP _after_cbind_cpp(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(cbind_cpp(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_after_embedc", (DL_FUNC) &_after_embedc, 2},
+    {"_after_sum_cpp", (DL_FUNC) &_after_sum_cpp, 1},
+    {"_after_l2_norm", (DL_FUNC) &_after_l2_norm, 1},
+    {"_after_gaussian_kxx_cpp", (DL_FUNC) &_after_gaussian_kxx_cpp, 3},
+    {"_after_gaussian_kxy_cpp", (DL_FUNC) &_after_gaussian_kxy_cpp, 4},
+    {"_after_poly_kxx_cpp", (DL_FUNC) &_after_poly_kxx_cpp, 4},
+    {"_after_poly_kxy_cpp", (DL_FUNC) &_after_poly_kxy_cpp, 5},
+    {"_after_matern32_kxx_cpp", (DL_FUNC) &_after_matern32_kxx_cpp, 3},
+    {"_after_matern32_kxy_cpp", (DL_FUNC) &_after_matern32_kxy_cpp, 4},
+    {"_after_matern52_kxx_cpp", (DL_FUNC) &_after_matern52_kxx_cpp, 3},
+    {"_after_matern52_kxy_cpp", (DL_FUNC) &_after_matern52_kxy_cpp, 4},
+    {"_after_sign_cpp", (DL_FUNC) &_after_sign_cpp, 1},
+    {"_after_abs_cpp", (DL_FUNC) &_after_abs_cpp, 1},
+    {"_after_max_cpp", (DL_FUNC) &_after_max_cpp, 2},
+    {"_after_norm_cpp", (DL_FUNC) &_after_norm_cpp, 1},
+    {"_after_cross_prod_cpp", (DL_FUNC) &_after_cross_prod_cpp, 2},
+    {"_after_soft_thres_cpp", (DL_FUNC) &_after_soft_thres_cpp, 2},
+    {"_after_pass_by_value", (DL_FUNC) &_after_pass_by_value, 2},
+    {"_after_lasso_shoot_cpp", (DL_FUNC) &_after_lasso_shoot_cpp, 6},
+    {"_after_crossprod_cpp", (DL_FUNC) &_after_crossprod_cpp, 2},
+    {"_after_columns_crossprod_cpp", (DL_FUNC) &_after_columns_crossprod_cpp, 1},
+    {"_after_squared_crossprod_cpp", (DL_FUNC) &_after_squared_crossprod_cpp, 2},
+    {"_after_calculate_hL", (DL_FUNC) &_after_calculate_hL, 3},
+    {"_after_calculate_xsiL", (DL_FUNC) &_after_calculate_xsiL, 5},
+    {"_after_calculate_betasL", (DL_FUNC) &_after_calculate_betasL, 2},
+    {"_after_calculate_fittedeL", (DL_FUNC) &_after_calculate_fittedeL, 3},
+    {"_after_create_lags_cpp", (DL_FUNC) &_after_create_lags_cpp, 2},
+    {"_after_create_train_inputs_cpp", (DL_FUNC) &_after_create_train_inputs_cpp, 2},
+    {"_after_reformat_cpp", (DL_FUNC) &_after_reformat_cpp, 2},
+    {"_after_rev_matrix_cpp", (DL_FUNC) &_after_rev_matrix_cpp, 1},
+    {"_after_rbind_vecmat_cpp", (DL_FUNC) &_after_rbind_vecmat_cpp, 2},
+    {"_after_cbind_cpp", (DL_FUNC) &_after_cbind_cpp, 2},
     {NULL, NULL, 0}
 };
 

@@ -410,7 +410,7 @@ treat_outliers <- function(x, plot=FALSE, replace=TRUE)
 #' @export
 #'
 #' @examples
-scale.ts <- function(x, center = TRUE, scale = TRUE) {
+scale_after <- function(x, center = TRUE, scale = TRUE) {
   tspx <- tsp(x)
   x <- as.ts(scale.default(x, center = center, scale = scale))
   tsp(x) <- tspx
