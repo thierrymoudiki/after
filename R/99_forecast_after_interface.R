@@ -959,7 +959,6 @@ smoothf <- function(y, h=5,
     res_obj$upper <- ans_mean + resid_fcast$upper
   }
 
-
   res_obj$model <- list(n_estimators=n_estimators,
                         lags=lags)
 

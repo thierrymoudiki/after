@@ -23,3 +23,5 @@ Imports: Rcpp (>= 0.12),
          vars, 
          xgboost
 LinkingTo: Rcpp
+Suggests: 
+    testthat

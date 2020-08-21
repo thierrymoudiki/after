@@ -93,6 +93,7 @@ ridgef <- function(x,
                    seed = 1,
                    h = 5,
                    type_ci = "none",
+                   type_forecast = c("recursive", "direct"),
                    level = 95)
 {
   if (!is.ts(x))
@@ -106,6 +107,7 @@ ridgef <- function(x,
   fit_method <- match.arg(fit_method)
   nodes_sim <- match.arg(nodes_sim)
   activ <- match.arg(activ)
+  type_forecast <- match.arg(type_forecast)
 
   # Fitting a regularized regression  model to multiple time series
   fit_obj <- fit_ridge_mts(
@@ -152,6 +154,7 @@ lmf <- function(x,
                 seed = 1,
                 h = 5,
                 type_ci = "none",
+                type_forecast = c("recursive", "direct"),
                 level = 95)
 {
   if (!is.ts(x))
@@ -164,6 +167,7 @@ lmf <- function(x,
 
   nodes_sim <- match.arg(nodes_sim)
   activ <- match.arg(activ)
+  type_forecast <- match.arg(type_forecast)
 
   # Fitting a(n unconstrained) regression  model to multiple time series
   fit_obj <- fit_lm_mts(
@@ -206,6 +210,7 @@ nnlsf <- function(x,
                   seed = 1,
                   h = 5,
                   type_ci = "none",
+                  type_forecast = c("recursive", "direct"),
                   level = 95)
 {
   if (!is.ts(x))
@@ -218,6 +223,7 @@ nnlsf <- function(x,
 
   nodes_sim <- match.arg(nodes_sim)
   activ <- match.arg(activ)
+  type_forecast <- match.arg(type_forecast)
 
   # Fitting a(n unconstrained) regression  model to multiple time series
   fit_obj <- fit_nnls_mts(
@@ -261,6 +267,7 @@ krlsf <- function(x,
                 inv_method = c("chol", "ginv"),
                 h = 5,
                 type_ci = "none",
+                type_forecast = c("recursive", "direct"),
                 level = 95)
 {
   if (!is.ts(x))
@@ -273,6 +280,7 @@ krlsf <- function(x,
 
   kernel_type <- match.arg(kernel_type)
   inv_method  <- match.arg(inv_method)
+  type_forecast <- match.arg(type_forecast)
 
   # Fitting a gaussian process regression  model to multiple time series
   fit_obj <- fit_krls_mts(
@@ -606,7 +614,6 @@ stack_data_ridge2f <- function(x,
   newdata <- cbind(x_test, new_preds)
   index <- duplicated(t(newdata))
 
-
   return(list(
     base_preds = base_preds,
     new_preds = new_preds,
@@ -632,6 +639,7 @@ glmboostf <- function(x, B = 10, eta = 0.1, lags = 1, nb_hidden = 1,
   freq_x <- frequency(x)
   start_fits <- start(x)
   start_preds <- tsp(x)[2] + 1/freq_x
+  type_forecast <- match.arg(type_forecast)
 
   # fitting the model
   fit_obj <- fit_glmboost_mts(x = x, B = B, eta = eta,
@@ -681,6 +689,8 @@ xgboostf <- function(x, B = 10, eta = 0.1,
   start_fits <- start(x)
   start_preds <- tsp(x)[2] + 1/freq_x
 
+  type_forecast <- match.arg(type_forecast)
+
   # fitting the model
   fit_obj <- fit_xgboost_mts(x = x, B = B, eta = eta,
                                              lambda = lambda, alpha = alpha,
@@ -690,8 +700,6 @@ xgboostf <- function(x, B = 10, eta = 0.1,
                                               hidden_layer_bias = hidden_layer_bias,
                                               direct_link = direct_link,
                                               a = a, seed = seed)
-
-  type_forecast <- match.arg(type_forecast)
 
   preds <- ts(data = fcast_obj_mts(
     fit_obj,
@@ -829,6 +837,7 @@ mtsmeanf <- function(x, h = 5)
   xm <- colMeans(x)
   preds <- tcrossprod(rep(1, h), xm)
   colnames(preds) <- series_names
+
   return(list(preds = ts(data=preds,
                          start = start_preds,
                          frequency = freq_x)))
@@ -857,6 +866,7 @@ mtsmedianf <- function(x, h = 5)
   xm <- apply(x, 2, median)
   preds <- tcrossprod(rep(1, h), xm)
   colnames(preds) <- series_names
+
   return(list(preds = ts(data=preds,
                          start = start_preds,
                          frequency = freq_x)))
@@ -885,6 +895,7 @@ mtsrwf <- function(x, h = 5)
   last_obs <- x[nrow(x), ]
   preds <- tcrossprod(rep(1, h), last_obs)
   colnames(preds) <- series_names
+
   return(list(preds = ts(data=preds,
                          start = start_preds,
                          frequency = freq_x)))
