@@ -1,0 +1,24 @@
+library(after)
+library(glmnet)
+library(testthat)
+
+testthat::context("Multivariate time series")
+
+# x <- fpp::insurance
+# after::krlsf(x)$preds
+# after::lmf(x)$preds[3, 1]
+# after::mtsmeanf(x)$preds[3, 1]
+# after::nnlsf(x)$preds[3, 1]
+# after::pcrf(x)$preds[3, 1]
+# after::plsf(x)$preds[3, 1]
+# after::ridgef(x)$preds[3, 1]
+# after::ridge2f(x)$preds[3, 1]
+# after::varf(x)$preds[3, 1]
+# after::xgboostf(x)$preds
+
+
+test_that("test multivariate time series methods", {
+  expect_equal(1, 1)
+  expect_equal(2, 2)
+  expect_equal(3, 3)
+})

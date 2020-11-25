@@ -1,0 +1,13 @@
+{
+    "dialog-state": {
+        "query": "fit_var_mts",
+        "path": "~/Documents/after",
+        "regex": false,
+        "caseSensitive": false,
+        "filePatterns": [],
+        "excludeFilePatterns": [],
+        "resultsCount": 5,
+        "errorCount": 0,
+        "replaceErrors": ""
+    }
+}

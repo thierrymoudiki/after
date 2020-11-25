@@ -1,6 +1,6 @@
 #' (used in ensemblef)
 #'
-#' @param fitted_objects
+#' @param fitted_objects lorem ipsum
 #'
 #' @return
 #' @export

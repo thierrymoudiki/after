@@ -1,0 +1,335 @@
+[
+    {
+        "file": "/Users/t/Documents/after/src/embedc.cpp",
+        "file_last_write": 1588295852.0,
+        "definitions": [
+            {
+                "usr": "c:@F@embedc#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "embedc(Rcpp::NumericVector, int)",
+                "file": "/Users/t/Documents/after/src/embedc.cpp",
+                "line": 15,
+                "column": 15
+            }
+        ]
+    },
+    {
+        "file": "/Users/t/Documents/after/src/kernels.cpp",
+        "file_last_write": 1597603684.0,
+        "definitions": [
+            {
+                "usr": "c:@F@sum_cpp#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "sum_cpp(Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 8,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@l2_norm#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "l2_norm(Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 19,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@gaussian_kxx_cpp#I#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gaussian_kxx_cpp(Rcpp::NumericMatrix, double, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 32,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@gaussian_kxy_cpp#I#I#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gaussian_kxy_cpp(Rcpp::NumericMatrix, Rcpp::NumericVector, double, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 48,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@poly_kxx_cpp#I#d#I#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "poly_kxx_cpp(Rcpp::NumericMatrix, double, int, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 69,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@poly_kxy_cpp#I#I#d#I#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "poly_kxy_cpp(Rcpp::NumericMatrix, Rcpp::NumericVector, double, int, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 85,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@matern32_kxx_cpp#I#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "matern32_kxx_cpp(Rcpp::NumericMatrix, double, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 106,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@matern32_kxy_cpp#I#I#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "matern32_kxy_cpp(Rcpp::NumericMatrix, Rcpp::NumericVector, double, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 125,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@matern52_kxx_cpp#I#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "matern52_kxx_cpp(Rcpp::NumericMatrix, double, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 148,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@matern52_kxy_cpp#I#I#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "matern52_kxy_cpp(Rcpp::NumericMatrix, Rcpp::NumericVector, double, double)",
+                "file": "/Users/t/Documents/after/src/kernels.cpp",
+                "line": 168,
+                "column": 15
+            }
+        ]
+    },
+    {
+        "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+        "file_last_write": 1597800048.0,
+        "definitions": [
+            {
+                "usr": "c:@F@sign_cpp#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "sign_cpp(double)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 6,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@abs_cpp#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "abs_cpp(double)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 12,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@max_cpp#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "max_cpp(double, double)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 18,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@norm_cpp#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "norm_cpp(Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 24,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@cross_prod_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "cross_prod_cpp(Rcpp::NumericVector, Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 38,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@soft_thres_cpp#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "soft_thres_cpp(double, double)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 56,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@pass_by_value#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "pass_by_value(Rcpp::NumericVector, Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 61,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@lasso_shoot_cpp#I#I#I#d#d#l#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "lasso_shoot_cpp(Rcpp::NumericVector, Rcpp::NumericMatrix, Rcpp::NumericVector, double, double, unsigned long)",
+                "file": "/Users/t/Documents/after/src/lasso_algo.cpp",
+                "line": 73,
+                "column": 6
+            }
+        ]
+    },
+    {
+        "file": "/Users/t/Documents/after/src/rcpp_hello_world.cpp",
+        "file_last_write": 1606303939.0,
+        "definitions": [
+            {
+                "usr": "c:@F@rcpp_hello_world#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rcpp_hello_world",
+                "file": "/Users/t/Documents/after/src/rcpp_hello_world.cpp",
+                "line": 6,
+                "column": 6
+            }
+        ]
+    },
+    {
+        "file": "/Users/t/Documents/after/src/scn.cpp",
+        "file_last_write": 1597800048.0,
+        "definitions": [
+            {
+                "usr": "c:@F@crossprod_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "crossprod_cpp(Rcpp::NumericVector, Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 8,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@columns_crossprod_cpp#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "columns_crossprod_cpp(Rcpp::NumericMatrix)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 24,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@squared_crossprod_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "squared_crossprod_cpp(Rcpp::NumericMatrix, Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 39,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@calculate_hL#I#I#$@N@Rcpp@S@String#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "calculate_hL(Rcpp::NumericMatrix, Rcpp::NumericVector, Rcpp::String)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 60,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@calculate_xsiL#I#I#d#d#l#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "calculate_xsiL(Rcpp::NumericMatrix, Rcpp::NumericVector, double, double, unsigned long)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 86,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@calculate_betasL#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "calculate_betasL(Rcpp::NumericMatrix, Rcpp::NumericVector)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 94,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@calculate_fittedeL#I#I#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "calculate_fittedeL(Rcpp::NumericVector, Rcpp::NumericVector, double)",
+                "file": "/Users/t/Documents/after/src/scn.cpp",
+                "line": 111,
+                "column": 15
+            }
+        ]
+    },
+    {
+        "file": "/Users/t/Documents/after/src/utils.cpp",
+        "file_last_write": 1597603684.0,
+        "definitions": [
+            {
+                "usr": "c:@F@create_lags_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "create_lags_cpp(Rcpp::NumericVector, int)",
+                "file": "/Users/t/Documents/after/src/utils.cpp",
+                "line": 6,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@create_train_inputs_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "create_train_inputs_cpp(Rcpp::NumericMatrix, int)",
+                "file": "/Users/t/Documents/after/src/utils.cpp",
+                "line": 24,
+                "column": 6
+            },
+            {
+                "usr": "c:@F@reformat_cpp#I#l#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "reformat_cpp(Rcpp::NumericMatrix, unsigned long)",
+                "file": "/Users/t/Documents/after/src/utils.cpp",
+                "line": 51,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@rev_matrix_cpp#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rev_matrix_cpp(Rcpp::NumericMatrix)",
+                "file": "/Users/t/Documents/after/src/utils.cpp",
+                "line": 70,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@rbind_vecmat_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rbind_vecmat_cpp(Rcpp::NumericVector, Rcpp::NumericMatrix)",
+                "file": "/Users/t/Documents/after/src/utils.cpp",
+                "line": 88,
+                "column": 15
+            },
+            {
+                "usr": "c:@F@cbind_cpp#I#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "cbind_cpp(Rcpp::NumericMatrix, Rcpp::NumericMatrix)",
+                "file": "/Users/t/Documents/after/src/utils.cpp",
+                "line": 111,
+                "column": 15
+            }
+        ]
+    }
+]

@@ -2,130 +2,134 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 embedc <- function(x, lags) {
-    .Call('_after_embedc', PACKAGE = 'after', x, lags)
+    .Call(`_after_embedc`, x, lags)
 }
 
 sum_cpp <- function(x) {
-    .Call('_after_sum_cpp', PACKAGE = 'after', x)
+    .Call(`_after_sum_cpp`, x)
 }
 
 l2_norm <- function(x) {
-    .Call('_after_l2_norm', PACKAGE = 'after', x)
+    .Call(`_after_l2_norm`, x)
 }
 
 gaussian_kxx_cpp <- function(x, sigma, l) {
-    .Call('_after_gaussian_kxx_cpp', PACKAGE = 'after', x, sigma, l)
+    .Call(`_after_gaussian_kxx_cpp`, x, sigma, l)
 }
 
 gaussian_kxy_cpp <- function(x, y, sigma, l) {
-    .Call('_after_gaussian_kxy_cpp', PACKAGE = 'after', x, y, sigma, l)
+    .Call(`_after_gaussian_kxy_cpp`, x, y, sigma, l)
 }
 
 poly_kxx_cpp <- function(x, sigma, d, l) {
-    .Call('_after_poly_kxx_cpp', PACKAGE = 'after', x, sigma, d, l)
+    .Call(`_after_poly_kxx_cpp`, x, sigma, d, l)
 }
 
 poly_kxy_cpp <- function(x, y, sigma, d, l) {
-    .Call('_after_poly_kxy_cpp', PACKAGE = 'after', x, y, sigma, d, l)
+    .Call(`_after_poly_kxy_cpp`, x, y, sigma, d, l)
 }
 
 matern32_kxx_cpp <- function(x, sigma, l) {
-    .Call('_after_matern32_kxx_cpp', PACKAGE = 'after', x, sigma, l)
+    .Call(`_after_matern32_kxx_cpp`, x, sigma, l)
 }
 
 matern32_kxy_cpp <- function(x, y, sigma, l) {
-    .Call('_after_matern32_kxy_cpp', PACKAGE = 'after', x, y, sigma, l)
+    .Call(`_after_matern32_kxy_cpp`, x, y, sigma, l)
 }
 
 matern52_kxx_cpp <- function(x, sigma, l) {
-    .Call('_after_matern52_kxx_cpp', PACKAGE = 'after', x, sigma, l)
+    .Call(`_after_matern52_kxx_cpp`, x, sigma, l)
 }
 
 matern52_kxy_cpp <- function(x, y, sigma, l) {
-    .Call('_after_matern52_kxy_cpp', PACKAGE = 'after', x, y, sigma, l)
+    .Call(`_after_matern52_kxy_cpp`, x, y, sigma, l)
 }
 
 sign_cpp <- function(x) {
-    .Call('_after_sign_cpp', PACKAGE = 'after', x)
+    .Call(`_after_sign_cpp`, x)
 }
 
 abs_cpp <- function(x) {
-    .Call('_after_abs_cpp', PACKAGE = 'after', x)
+    .Call(`_after_abs_cpp`, x)
 }
 
 max_cpp <- function(x, y) {
-    .Call('_after_max_cpp', PACKAGE = 'after', x, y)
+    .Call(`_after_max_cpp`, x, y)
 }
 
 norm_cpp <- function(x) {
-    .Call('_after_norm_cpp', PACKAGE = 'after', x)
+    .Call(`_after_norm_cpp`, x)
 }
 
 cross_prod_cpp <- function(x, y) {
-    .Call('_after_cross_prod_cpp', PACKAGE = 'after', x, y)
+    .Call(`_after_cross_prod_cpp`, x, y)
 }
 
 soft_thres_cpp <- function(x, y) {
-    .Call('_after_soft_thres_cpp', PACKAGE = 'after', x, y)
+    .Call(`_after_soft_thres_cpp`, x, y)
 }
 
 pass_by_value <- function(x, y) {
-    .Call('_after_pass_by_value', PACKAGE = 'after', x, y)
+    .Call(`_after_pass_by_value`, x, y)
 }
 
 lasso_shoot_cpp <- function(beta, XX2, Xy2, lambda, tol = 1e-05, max_iter = 1e05L) {
-    .Call('_after_lasso_shoot_cpp', PACKAGE = 'after', beta, XX2, Xy2, lambda, tol, max_iter)
+    .Call(`_after_lasso_shoot_cpp`, beta, XX2, Xy2, lambda, tol, max_iter)
+}
+
+rcpp_hello_world <- function() {
+    .Call(`_after_rcpp_hello_world`)
 }
 
 crossprod_cpp <- function(x, y) {
-    .Call('_after_crossprod_cpp', PACKAGE = 'after', x, y)
+    .Call(`_after_crossprod_cpp`, x, y)
 }
 
 columns_crossprod_cpp <- function(eL) {
-    .Call('_after_columns_crossprod_cpp', PACKAGE = 'after', eL)
+    .Call(`_after_columns_crossprod_cpp`, eL)
 }
 
 squared_crossprod_cpp <- function(eL, hL) {
-    .Call('_after_squared_crossprod_cpp', PACKAGE = 'after', eL, hL)
+    .Call(`_after_squared_crossprod_cpp`, eL, hL)
 }
 
 calculate_hL <- function(x, w, activation) {
-    .Call('_after_calculate_hL', PACKAGE = 'after', x, w, activation)
+    .Call(`_after_calculate_hL`, x, w, activation)
 }
 
 calculate_xsiL <- function(eL, hL, nu, r, L) {
-    .Call('_after_calculate_xsiL', PACKAGE = 'after', eL, hL, nu, r, L)
+    .Call(`_after_calculate_xsiL`, eL, hL, nu, r, L)
 }
 
 calculate_betasL <- function(eL, hL) {
-    .Call('_after_calculate_betasL', PACKAGE = 'after', eL, hL)
+    .Call(`_after_calculate_betasL`, eL, hL)
 }
 
 calculate_fittedeL <- function(betasL, hL, nu) {
-    .Call('_after_calculate_fittedeL', PACKAGE = 'after', betasL, hL, nu)
+    .Call(`_after_calculate_fittedeL`, betasL, hL, nu)
 }
 
 create_lags_cpp <- function(x, k) {
-    .Call('_after_create_lags_cpp', PACKAGE = 'after', x, k)
+    .Call(`_after_create_lags_cpp`, x, k)
 }
 
 create_train_inputs_cpp <- function(x, k) {
-    .Call('_after_create_train_inputs_cpp', PACKAGE = 'after', x, k)
+    .Call(`_after_create_train_inputs_cpp`, x, k)
 }
 
 reformat_cpp <- function(x, n_k) {
-    .Call('_after_reformat_cpp', PACKAGE = 'after', x, n_k)
+    .Call(`_after_reformat_cpp`, x, n_k)
 }
 
 rev_matrix_cpp <- function(x) {
-    .Call('_after_rev_matrix_cpp', PACKAGE = 'after', x)
+    .Call(`_after_rev_matrix_cpp`, x)
 }
 
 rbind_vecmat_cpp <- function(y, x) {
-    .Call('_after_rbind_vecmat_cpp', PACKAGE = 'after', y, x)
+    .Call(`_after_rbind_vecmat_cpp`, y, x)
 }
 
 cbind_cpp <- function(x, y) {
-    .Call('_after_cbind_cpp', PACKAGE = 'after', x, y)
+    .Call(`_after_cbind_cpp`, x, y)
 }
 

@@ -695,7 +695,7 @@ fcast_obj_mts <- function(fit_obj,
                                  direct_link = TRUE,
                                  B = fit_obj$ncomp)
         }
-      } else {
+      } else { # direct link = FALSE
         for (i in 1:h)
         {
           newx <- reformat_cpp(y, lags)

@@ -14,8 +14,8 @@ sourceDir("afterfuncs")
 
 #' Title
 #'
-#' @param y
-#' @param h
+#' @param y lorem ipsum
+#' @param h lorem ipsum
 #' @param ... additional parameters to be passed to `stats::arima0`
 #'
 #' @return
@@ -45,10 +45,10 @@ arimaf <- function(y, h=5, level=c(80, 95),
   objective <- function(xx, ...)
   {
     k <- sum(xx)
-    res <- try(stats::arima0(x,
+    res <- suppressWarnings(try(stats::arima0(x,
                              order = c(xx[1], xx[2], xx[3]),
                              ...)$aic + (2*k*(k+1))/(n-k-1),
-               silent = TRUE)
+               silent = TRUE))
     if (class(res) == "try-error")
       return(.Machine$integer.max)
     return(res)
@@ -67,7 +67,6 @@ arimaf <- function(y, h=5, level=c(80, 95),
   out$model <- fit
   out$method <- paste0("arima(", order_[1], ",",
                        order_[2], ",", order_[3], ")")
-  print(fit)
   preds <- predict(fit, n.ahead = h)
   fcast  <- preds$pred
   out$sigma <- preds$se
@@ -126,15 +125,16 @@ arimaf <- function(y, h=5, level=c(80, 95),
   return(structure(out, class = "forecast"))
 
 }
+arimaf <- compiler::cmpfun(arimaf)
 
 
 #' Title
 #'
-#' @param y
-#' @param h
-#' @param level
-#' @param fit_func
-#' @param predict_func
+#' @param y lorem ipsum
+#' @param h lorem ipsum
+#' @param level lorem ipsum
+#' @param fit_func lorem ipsum
+#' @param predict_func lorem ipsum
 #' @param ...
 #'
 #' @return
@@ -143,12 +143,12 @@ arimaf <- function(y, h=5, level=c(80, 95),
 #' @examples
 #'
 #' par(mfrow=c(3, 2))
-#' plot(dynrmf(USAccDeaths, level=c(80, 90, 95, 99)))
-#' plot(dynrmf(AirPassengers, level=c(80, 90, 95, 99)))
-#' plot(dynrmf(lynx, level=c(80, 90, 95, 99)))
-#' plot(dynrmf(WWWusage, level=c(80, 90, 95, 99)))
-#' plot(dynrmf(Nile, level=c(80, 90, 95, 99)))
-#' plot(dynrmf(fdeaths, level=c(80, 90, 95, 99)))
+#' plot(dynrmf(USAccDeaths, h=10, level=c(80, 90, 95, 99)))
+#' plot(dynrmf(AirPassengers, h=10, level=c(80, 90, 95, 99)))
+#' plot(dynrmf(lynx, h=10, level=c(80, 90, 95, 99)))
+#' plot(dynrmf(WWWusage, h=10, level=c(80, 90, 95, 99)))
+#' plot(dynrmf(Nile, h=10, level=c(80, 90, 95, 99)))
+#' plot(dynrmf(fdeaths, h=10, level=c(80, 90, 95, 99)))
 #'
 #'
 dynrmf <- function(y, h = 5,
@@ -164,6 +164,7 @@ dynrmf <- function(y, h = 5,
 
   return(dynrm_predict(obj, h=h, level=level, ...))
 }
+dynrmf <- compiler::cmpfun(dynrmf)
 
 
 #' combined ets-arima-theta forecasts
@@ -395,14 +396,15 @@ eatf <- function(y, h = 5,
   }
 
 }
+eatf <- compiler::cmpfun(eatf)
 
 
 #' Ensemble forecasting from fitted forecasting objects
 #'
-#' @param fitted_objects
-#' @param weights
-#' @param level
-#' @param ci
+#' @param fitted_objects lorem ipsum
+#' @param weights lorem ipsum
+#' @param level lorem ipsum
+#' @param ci lorem ipsum
 #'
 #' @return
 #' @export
@@ -552,6 +554,7 @@ ensemblef <- function(fitted_objects,
 
   return (res_obj)
 }
+ensemblef <- compiler::cmpfun(ensemblef)
 
 
 #' GARCH(1, 1) forecasting function
@@ -597,6 +600,7 @@ garch11f <- function(x, h=5, level=c(80, 95))
 
   return (res_obj)
 }
+garch11f <- compiler::cmpfun(garch11f)
 
 
 #' Title
@@ -719,22 +723,23 @@ mmf <- function(y, h = 5,
   return(structure(out, class = "forecast"))
 
 }
+mmf <- compiler::cmpfun(mmf)
 
 
 #' Title
 #'
-#' @param x
-#' @param h
-#' @param degree
-#' @param lambda
-#' @param level
-#' @param fan
+#' @param x lorem ipsum
+#' @param h lorem ipsum
+#' @param degree lorem ipsum
+#' @param lambda lorem ipsum
+#' @param level lorem ipsum
+#' @param fan lorem ipsum
 #'
 #' @return
 #' @export
 #'
 #' @examples
-polythetaf <- function (y, h = ifelse(frequency(x) > 1, 2 * frequency(x), 10),
+polythetaf <- function (y, h = 5,
                         lambda=10^seq(from=-5, to=4,
                                       length.out = 100),
                         level = c(80, 95), fan = FALSE)
@@ -767,7 +772,7 @@ polythetaf <- function (y, h = ifelse(frequency(x) > 1, 2 * frequency(x), 10),
   origx <- x
   if (seasonal) {
     decomp <- decompose(x, type = "multiplicative")
-    if (any(abs(seasonal(decomp)) < 1e-10)) {
+    if (any(abs(forecast::seasonal(decomp)) < 1e-10)) {
       warning("Seasonal indexes equal to zero. Using non-seasonal Theta method")
     }
     else {
@@ -775,14 +780,14 @@ polythetaf <- function (y, h = ifelse(frequency(x) > 1, 2 * frequency(x), 10),
     }
   }
 
-  fcast <- ses(x, h = h)
+  fcast <- forecast::ses(x, h = h)
   training_trend <- 0:(n - 1)
   test_trend <- 0:(h - 1)
 
   training_data <- cbind.data.frame(y = x, trend = training_trend)
   test_data <- as.matrix(test_trend)
 
-  regr <- polytheta::fit_ridge(x=training_data[,-1], y=training_data$y,
+  regr <- fit_ridge(x=training_data[,-1], y=training_data$y,
                                lambda=lambda)
 
   index_lambda <- which.min(regr$GCV)
@@ -791,8 +796,9 @@ polythetaf <- function (y, h = ifelse(frequency(x) > 1, 2 * frequency(x), 10),
 
   alpha <- pmax(1e-10, fcast$model$par["alpha"])
 
-  fcast$mean <- fcast$mean +  predict_ridge(regr, test_data)[,index_lambda]  + tmp2 * (1 - (1 -
-                                                                                              alpha)^n)/alpha
+  tmp <- predict_ridge(regr, test_data) # add to fcast$mean
+
+  fcast$mean <- fcast$mean + tmp + tmp2 * (1 - (1 - alpha)^n)/alpha
 
   if (seasonal) {
     fcast$mean <- fcast$mean * rep(tail(decomp$seasonal,
@@ -827,13 +833,13 @@ polythetaf <- function (y, h = ifelse(frequency(x) > 1, 2 * frequency(x), 10),
   fcast$model$call <- match.call()
   return(fcast)
 }
-
+polythetaf <- compiler::cmpfun(polythetaf)
 
 
 #' Title
 #'
-#' @param n_estimators
-#' @param lags
+#' @param n_estimators lorem ipsum
+#' @param lags lorem ipsum
 #'
 #' @return
 #' @export
@@ -980,3 +986,5 @@ smoothf <- function(y, h=5,
 
   return(res_obj)
 }
+smoothf <- compiler::cmpfun(smoothf)
+

@@ -1,27 +1,14 @@
 Package: after
-Title: A package for time series forecasting
-Version: 0.0.0.9000
-Author: T. Moudiki
-Maintainer: T. Moudiki <thierry.moudiki@pm.me>
-Description: What the package does (one paragraph).
-License: BSD3 Clause Clear
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.0
-Imports: Rcpp (>= 0.12), 
-         fGarch, 
-         forecast, 
-         foreach, 
-         randtoolbox,
-         cclust, 
-         dfoptim, 
-         glmnet, 
-         mboost, 
-         nnls, 
-         pls, 
-         pscl, 
-         vars, 
-         xgboost
+Type: Package
+Title: What the Package Does in One 'Title Case' Line
+Version: 1.0
+Date: 2020-11-25
+Author: Your Name
+Maintainer: Your Name <your@email.com>
+Description: One paragraph description of what the package does as
+       one or more full sentences.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp
 Suggests: 
     testthat

@@ -246,6 +246,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_hello_world
+List rcpp_hello_world();
+RcppExport SEXP _after_rcpp_hello_world() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
+    return rcpp_result_gen;
+END_RCPP
+}
 // crossprod_cpp
 double crossprod_cpp(NumericVector x, NumericVector y);
 RcppExport SEXP _after_crossprod_cpp(SEXP xSEXP, SEXP ySEXP) {
@@ -426,6 +436,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_after_soft_thres_cpp", (DL_FUNC) &_after_soft_thres_cpp, 2},
     {"_after_pass_by_value", (DL_FUNC) &_after_pass_by_value, 2},
     {"_after_lasso_shoot_cpp", (DL_FUNC) &_after_lasso_shoot_cpp, 6},
+    {"_after_rcpp_hello_world", (DL_FUNC) &_after_rcpp_hello_world, 0},
     {"_after_crossprod_cpp", (DL_FUNC) &_after_crossprod_cpp, 2},
     {"_after_columns_crossprod_cpp", (DL_FUNC) &_after_columns_crossprod_cpp, 1},
     {"_after_squared_crossprod_cpp", (DL_FUNC) &_after_squared_crossprod_cpp, 2},

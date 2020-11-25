@@ -10,20 +10,23 @@
 
 #' Fit a dynrm
 #'
-#' @param y
-#' @param p
-#' @param P
-#' @param xreg
-#' @param fit_func
-#' @param predict_func
-#' @param fit_params
-#' @param lambda
-#' @param scale_inputs
-#' @param x
-#' @param centers
-#' @param seed
-#' @param ...
+#' @param y lorem ipsum
+#' @param p lorem ipsum
+#' @param P lorem ipsum
+#' @param xreg lorem ipsum
+#' @param fit_func lorem ipsum
+#' @param predict_func lorem ipsum
+#' @param fit_params lorem ipsum
+#' @param lambda lorem ipsum
+#' @param scale_inputs lorem ipsum
+#' @param x lorem ipsum
+#' @param centers lorem ipsum
+#' @param seed lorem ipsum
+#' @param ... lorem ipsum
 #' @example
+#'
+#' a <- 1
+#' print(a + 2)
 #'
 dynrm_fit <- function(y,
                    p,
@@ -273,14 +276,14 @@ dynrm_fit <- function(y,
 
 #' Predict from dynrm
 #'
-#' @param out
-#' @param h
-#' @param level
-#' @param fan
-#' @param xreg
-#' @param lambda
-#' @param ci
-#' @param ...
+#' @param out lorem ipsum
+#' @param h lorem ipsum
+#' @param level lorem ipsum
+#' @param fan lorem ipsum
+#' @param xreg lorem ipsum
+#' @param lambda lorem ipsum
+#' @param ci lorem ipsum
+#' @param ... lorem ipsum
 #'
 #' @return
 #' @export

@@ -98,8 +98,18 @@ fit_ridge <- function(x, y, lambda=10^seq(-10, 10,
 predict_ridge <- function(obj, newx, cv=TRUE)
 {
   if (cv){
-    return(drop(base::scale(newx, center=obj$xm,
-                       scale=obj$xsd)%*%obj$coef[,which.min(obj$GCV)] + obj$ym))
+    res <- try(drop(base::scale(newx, center=obj$xm,
+                                scale=obj$xsd)%*%obj$coef[,which.min(obj$GCV)] + obj$ym),
+               silent = TRUE)
+    if (class(res) == "try-error")
+    {
+      res <- try(drop(base::scale(newx, center=obj$xm,
+                                  scale=obj$xsd)%*%obj$coef[which.min(obj$GCV)] + obj$ym),
+                 silent = TRUE)
+      return(res)
+    } else {
+      return(res)
+    }
   }
 
   return(base::scale(newx, center=obj$xm,
