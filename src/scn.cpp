@@ -123,28 +123,27 @@ NumericMatrix calculate_fittedeL(NumericVector betasL, NumericVector hL, double 
 }
 
 /*** R
-set.seed(156)
-n <- 20 ; p <- 5
-X <- matrix(rnorm(n * p), n, p) # no intercept!
-y <- matrix(rnorm(4*n), ncol = 4)
-
-fit_obj_scn <- fit_SCN(x = X, y = y, B = 500, lam = 100,
-                                       nu = 0.5, col_sample = 0.8)
- preds <- predict_SCN(fit_obj_scn,
-                                             newx = X)
-
-par(mfrow=c(2, 2))
-plot(1:nrow(X), y[,1], type = 'l')
- lines(1:nrow(X), preds[,1],
-      col = "red")
-plot(1:nrow(X), y[,2], type = 'l')
-lines(1:nrow(X), preds[,2],
-      col = "red")
-plot(1:nrow(X), y[,3], type = 'l')
-lines(1:nrow(X), preds[,3],
-      col = "red")
-plot(1:nrow(X), y[,4], type = 'l')
-lines(1:nrow(X), preds[,4],
-      col = "red")
+# set.seed(156)
+# n <- 20 ; p <- 5
+# X <- matrix(rnorm(n * p), n, p) # no intercept!
+# y <- matrix(rnorm(4*n), ncol = 4)
+#
+# fit_obj_scn <- fit_SCN(x = X, y = y, B = 500, lam = 100,
+#                                        nu = 0.5, col_sample = 0.8)
+#  preds <- predict_SCN(fit_obj_scn, newx = X)
+#
+# par(mfrow=c(2, 2))
+# plot(1:nrow(X), y[,1], type = 'l')
+#  lines(1:nrow(X), preds[,1],
+#       col = "red")
+# plot(1:nrow(X), y[,2], type = 'l')
+# lines(1:nrow(X), preds[,2],
+#       col = "red")
+# plot(1:nrow(X), y[,3], type = 'l')
+# lines(1:nrow(X), preds[,3],
+#       col = "red")
+# plot(1:nrow(X), y[,4], type = 'l')
+# lines(1:nrow(X), preds[,4],
+#       col = "red")
 
 */

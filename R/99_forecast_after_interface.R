@@ -216,6 +216,16 @@ dynrmf <- compiler::cmpfun(dynrmf)
 #'weights = c(0, 0.5, 0.5))
 #'plot(obj)
 #'
+#'
+#' par(mfrow=c(3, 2))
+#' plot(eatf(USAccDeaths, h=10, level=c(80, 90, 95, 99)))
+#' plot(eatf(AirPassengers, h=10, level=c(80, 90, 95, 99)))
+#' plot(eatf(lynx, h=10, level=c(80, 90, 95, 99)))
+#' plot(eatf(WWWusage, h=10, level=c(80, 90, 95, 99)))
+#' plot(eatf(Nile, h=10, level=c(80, 90, 95, 99)))
+#' plot(eatf(fdeaths, h=10, level=c(80, 90, 95, 99)))
+#
+#'
 eatf <- function(y, h = 5,
                  level = c(80, 95),
                  method = c("E", "A", "T", "EAT"),
@@ -230,27 +240,18 @@ eatf <- function(y, h = 5,
 
   stopifnot(sum(weights) == 1)
 
-  if (method == "E")
+  if (method %in% c("E", "A", "T"))
   {
-    return(forecast::forecast(forecast::ets(y = y, ...),
-                              h = h, level = level,...))
-  }
-
-  if (method == "A")
-  {
-    return(forecast::forecast(forecast::auto.arima(y = y, ...),
-                              h = h, level = level, ...))
-  }
-
-  if (method == "T")
-  {
-    return(forecast::thetaf(y = y, h = h,
-                            level = level, ...))
-  }
-
-  if (method == "EAT")
-  {
-    #stopifnot(sum(weights) == 1)
+    return(switch(method,
+           "E" = forecast::forecast(forecast::ets(y = y, ...),
+                              h = h, level = level,...),
+           "A" = forecast::forecast(forecast::auto.arima(y = y, ...),
+                              h = h, level = level, ...),
+           "T" = forecast::thetaf(y = y, h = h,
+                            level = level, ...)))
+  } else {
+    #if (method == "EAT")
+    #stopifnot(sum(weights) == 1)?
 
     if (all(weights != 0))
     {
@@ -575,7 +576,7 @@ garch11f <- function(x, h=5, level=c(80, 95))
 {
 
   # container for the results
-  fit <- fGarch::garchFit(~ garch(1,1), data = x, trace = FALSE)
+  fit <- fGarch::garchFit(formula = ~ garch(1,1), data = x, trace = FALSE)
   preds <- fGarch::predict(fit, h)
   critical_values <- sapply(level, function(q) qnorm(1 - (1 - q/100)/2))
   freq_x <- frequency(x)

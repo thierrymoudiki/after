@@ -492,6 +492,79 @@ fcast_obj_mts <- function(fit_obj,
           y <- rbind_vecmat_cpp(preds, y)
         }
     }
+
+    if (fit_method == "gen")
+    {
+      y <- fit_obj$y
+      lags <- fit_obj$lags
+
+      if (fit_obj$nb_hidden > 0)
+      {
+        nn_xm <- fit_obj$nn_xm
+        nn_xsd <- fit_obj$nn_xsd
+        w <- fit_obj$w
+        g <- fit_obj$activ
+
+        for (i in 1:h)
+        {
+          newx <- reformat_cpp(y, lags)
+
+          if(fit_obj$hidden_layer_bias == FALSE)
+          {
+            newx <- cbind(newx, matrix(g(my_scale(
+              newx, xm = nn_xm,
+              xsd = nn_xsd
+            ) %*% w)[, hidden_layer_index],
+            nrow = 1))
+
+          } else { # no bias term
+
+            newx <- cbind(newx, matrix(g(my_scale(
+              cbind(1, newx), xm = c(1, nn_xm),
+              xsd = c(1, nn_xsd)) %*% w)[, hidden_layer_index], nrow = 1))
+          }
+
+          cat("\n")
+          cat("newx", newx)
+          cat("\n")
+          print(dim(newx))
+
+          preds <- try(lapply(1:length(fit_obj$series_names),
+                              function (i) fit_obj$predict_func(fit_obj$fit_obj[[i]],
+                                                                newx = matrix(newx, nrow=1)) + fit_obj$ym[i]),
+                                                      silent = TRUE)
+
+          print("here1")
+
+          if (class(preds) == "try-error")
+          {
+            preds <- lapply(1:length(fit_obj$series_names),
+                            function (i) fit_obj$predict_func(fit_obj$fit_obj[[i]],
+                                                              newdata = matrix(newx, nrow=1)) + fit_obj$ym[i])
+          }
+
+          print("here2")
+
+          print(preds)
+
+          y <- rbind_vecmat_cpp(preds, y)
+        }
+      } else { # nb_hidden <= 0
+
+        for (i in 1:h)
+        {
+          newx <- reformat_cpp(y, lags)
+          preds <- try(fit_obj$predict_func(fit_obj, newx = newx), silent = TRUE)
+          if (class(preds) == "try-error")
+          {
+            preds <-fit_obj$predict_func(fit_obj, newdata = newx)
+          }
+          y <- rbind_vecmat_cpp(preds, y)
+        }
+
+      }
+
+    }
   }
 
   # 2 - direct forecasts -------------------------------------------------
@@ -913,6 +986,11 @@ fcast_obj_mts <- function(fit_obj,
         }
       }
     }
+
+    if (fit_method == "gen")
+    {
+      stop("direct forecast not implemented for 'gen'")
+    }
   }
 
   # Forecast method
@@ -952,7 +1030,7 @@ fcast_obj_mts <- function(fit_obj,
       names(ans)  <- fit_obj$series_names
 
       return(list(obs = res2, fcst = ans))
-    } else {
+    } else { # fit_method != "VAR"
       res2 <- rev_matrix_cpp(y)
       n <- nrow(res2)
       res <- res2[(n - h + 1):n,]

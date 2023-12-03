@@ -13,7 +13,30 @@ sourceDir("regmtsfuncs")
 # 1 - Individual models ---------------------------------------------------
 
 # Forecasts from ridge2
-ridge2f <- function(x,
+#' Title
+#'
+#' @param x
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param col_sample
+#' @param row_sample
+#' @param a
+#' @param lambda_1
+#' @param lambda_2
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ridge2f <- function(y=x,
                     lags = 1,
                     nb_hidden = 5,
                     nodes_sim = c("sobol", "halton", "unif"),
@@ -74,12 +97,34 @@ ridge2f <- function(x,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 ridge2f <- compiler::cmpfun(ridge2f)
 
 # Forecasts from ridge
+#' Title
+#'
+#' @param x
+#' @param lags
+#' @param nb_hidden
+#' @param fit_method
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param a
+#' @param lambda
+#' @param alpha
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 ridgef <- function(x,
                    lags = 1,
                    nb_hidden = 5,
@@ -139,12 +184,31 @@ ridgef <- function(x,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 ridgef <- compiler::cmpfun(ridgef)
 
 # Forecasts from unsconstrained linear model
+#' Title
+#'
+#' @param x
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param a
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 lmf <- function(x,
                 lags = 1,
                 nb_hidden = 5,
@@ -196,12 +260,31 @@ lmf <- function(x,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 lmf <- compiler::cmpfun(lmf)
 
 # Forecasts from constrained linear model (positive coefficients)
+#' Title
+#'
+#' @param x
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param a
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 nnlsf <- function(x,
                   lags = 1,
                   nb_hidden = 5,
@@ -253,13 +336,32 @@ nnlsf <- function(x,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 nnlsf <- compiler::cmpfun(nnlsf)
 
 # RENAME # RENAME # RENAME
 # Forecasts from krls models
+#' Title
+#'
+#' @param x
+#' @param lags
+#' @param lambda_krls
+#' @param l
+#' @param sigma
+#' @param d
+#' @param kernel_type
+#' @param inv_method
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 krlsf <- function(x,
                 lags = 1,
                 lambda_krls = 0.1,
@@ -311,12 +413,28 @@ krlsf <- function(x,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 krlsf <- compiler::cmpfun(krlsf)
 
 # Forecasts from unsconstrained VAR models
+#' Title
+#'
+#' @param x
+#' @param lags
+#' @param penalization
+#' @param lambda
+#' @param type_VAR
+#' @param type_forecast
+#' @param h
+#' @param type_ci
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 varf <- function(x,
                  lags = 1,
                  penalization = c("none", "l1"),
@@ -358,12 +476,12 @@ varf <- function(x,
       level = level),
       start = start_preds, frequency = freq_x)
 
-    #resids <- ts(data = ,
-    #             start = start_preds, frequency = freq_x)
+    resids <- ts(data = residuals(fit_obj$fit_obj),
+                 start = start_preds, frequency = freq_x)
 
     # Forecast from fit_obj
-    #return(list(preds = preds,
-    #            resid = resids))
+    return(list(mean = preds,
+                resid = resids))
   }
 
   if (penalization == "l1")
@@ -376,28 +494,45 @@ varf <- function(x,
 
     # Forecast from fit_obj
 
-    preds <- ts(data = fcast_obj_mts(
+    return(list(preds = ts(data = fcast_obj_mts(
       fit_obj,
       h = h,
       # type_ci = type_ci,
       type_forecast = type_forecast),#,
       #level = level),
-      start = start_preds, frequency = freq_x)
+      start = start_preds, frequency = freq_x),
+      resid=NULL))
 
-    print(dim(fit_obj$resid))
+    # think about it
+    # think about it
+    # think about it
 
-    resids <- ts(data = fit_obj$resid,
-                 start = start_preds, frequency = freq_x)
+    #resids <- ts(data = fit_obj$resid,
+    #             start = start_preds, frequency = freq_x)
 
     # Forecast from fit_obj
-    return(list(preds = preds,
-                resid = resids))
+    #return(list(mean = preds,
+    #            resid = resids))
   }
 
 }
 varf <- compiler::cmpfun(varf)
 
 # principal components regression
+#' Title
+#'
+#' @param x
+#' @param ncomp
+#' @param lags
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 pcrf <- function(x, ncomp = ncol(x), lags = 1,
                  h = 5,
                  type_ci = "none",
@@ -429,7 +564,7 @@ pcrf <- function(x, ncomp = ncol(x), lags = 1,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 pcrf <- compiler::cmpfun(pcrf)
@@ -437,6 +572,28 @@ pcrf <- compiler::cmpfun(pcrf)
 # 2 - Ensemble models ---------------------------------------------------
 
 # Bootstrap aggregating
+#' Title
+#'
+#' @param x
+#' @param B
+#' @param agg
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param verbose
+#' @param col_sample
+#' @param row_sample
+#' @param a
+#' @param lambda_1
+#' @param lambda_2
+#' @param h
+#'
+#' @return
+#' @export
+#'
+#' @examples
 bag_ridge2f <- function(x,
                         B = 10,
                         agg = c("mean", "median"),
@@ -542,6 +699,25 @@ bag_ridge2f <- function(x,
 bag_ridge2f <- compiler::cmpfun(bag_ridge2f)
 
 # Stacked generalization
+#' Title
+#'
+#' @param x
+#' @param B
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param col_sample
+#' @param row_sample
+#' @param a
+#' @param lambda_1
+#' @param lambda_2
+#'
+#' @return
+#' @export
+#'
+#' @examples
 stack_data_ridge2f <- function(x,
                                B = 10,
                                lags = 1,
@@ -633,6 +809,28 @@ stack_data_ridge2f <- compiler::cmpfun(stack_data_ridge2f)
 
 
 # glmboosting
+#' Title
+#'
+#' @param x
+#' @param B
+#' @param eta
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param a
+#' @param direct_link
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 glmboostf <- function(x, B = 10, eta = 0.1, lags = 1, nb_hidden = 1,
                       nodes_sim = c("sobol", "halton", "unif"),
                       activ = c("relu", "sigmoid", "tanh", "leakyrelu", "elu", "linear"),
@@ -675,13 +873,37 @@ glmboostf <- function(x, B = 10, eta = 0.1, lags = 1, nb_hidden = 1,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 glmboostf <- compiler::cmpfun(glmboostf)
 
 
 # xgboosting
+#' Title
+#'
+#' @param x
+#' @param B
+#' @param eta
+#' @param lambda
+#' @param alpha
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param a
+#' @param direct_link
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 xgboostf <- function(x, B = 10, eta = 0.1,
                      lambda = 0.1, alpha = 0.5,
                      lags = 1, nb_hidden = 5,
@@ -706,13 +928,13 @@ xgboostf <- function(x, B = 10, eta = 0.1,
 
   # fitting the model
   fit_obj <- fit_xgboost_mts(x = x, B = B, eta = eta,
-                                             lambda = lambda, alpha = alpha,
-                                              lags = lags, nb_hidden = nb_hidden,
-                                              nodes_sim = match.arg(nodes_sim),
-                                              activ = match.arg(activ),
-                                              hidden_layer_bias = hidden_layer_bias,
-                                              direct_link = direct_link,
-                                              a = a, seed = seed)
+                             lambda = lambda, alpha = alpha,
+                              lags = lags, nb_hidden = nb_hidden,
+                              nodes_sim = match.arg(nodes_sim),
+                              activ = match.arg(activ),
+                              hidden_layer_bias = hidden_layer_bias,
+                              direct_link = direct_link,
+                              a = a, seed = seed)
 
   preds <- ts(data = fcast_obj_mts(
     fit_obj,
@@ -722,17 +944,42 @@ xgboostf <- function(x, B = 10, eta = 0.1,
     level = level),
     start = start_preds, frequency = freq_x)
 
-  resids <- ts(data = fit_obj$resid,
-               start = start_preds, frequency = freq_x)
+  # think about this
+  #resids <- ts(data = fit_obj$resid,
+  #             start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
-              resid = resids))
+  return(list(preds = preds))#,
+             # resid = resids))
 }
 xgboostf <- compiler::cmpfun(xgboostf)
 
 
 # scn
+#' Title
+#'
+#' @param x
+#' @param B
+#' @param lags
+#' @param activ
+#' @param hidden_layer_bias
+#' @param eta
+#' @param lam
+#' @param r
+#' @param tol
+#' @param col_sample
+#' @param method
+#' @param type_optim
+#' @param verbose
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 scnf <- function(x, B = 100, lags = 1, activ = c("tanh", "sigmoid"),
                  hidden_layer_bias = FALSE,
                  eta = 0.1, lam = 100, r = 0.3, tol = 1e-10, col_sample = 1,
@@ -777,13 +1024,34 @@ scnf <- function(x, B = 100, lags = 1, activ = c("tanh", "sigmoid"),
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 scnf <- compiler::cmpfun(scnf)
 
 
 # partial least squares
+#' Title
+#'
+#' @param x
+#' @param B
+#' @param lags
+#' @param nb_hidden
+#' @param nodes_sim
+#' @param activ
+#' @param hidden_layer_bias
+#' @param direct_link
+#' @param a
+#' @param seed
+#' @param h
+#' @param type_ci
+#' @param type_forecast
+#' @param level
+#'
+#' @return
+#' @export
+#'
+#' @examples
 plsf <- function(x, B = 5, lags = 1, nb_hidden = 5,
                  nodes_sim = c("sobol","halton", "unif"),
                  activ = c("relu", "sigmoid", "tanh",
@@ -825,7 +1093,7 @@ plsf <- function(x, B = 5, lags = 1, nb_hidden = 5,
                start = start_preds, frequency = freq_x)
 
   # Forecast from fit_obj
-  return(list(preds = preds,
+  return(list(mean = preds,
               resid = resids))
 }
 plsf <- compiler::cmpfun(plsf)
